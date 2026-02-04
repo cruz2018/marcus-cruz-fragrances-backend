@@ -12,12 +12,16 @@ import { Role } from '@prisma/client';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.ADMIN)
 export class AdminOrdersController {
+  // Inject the service that contains order business logic.
   constructor(private readonly ordersService: OrdersService) {}
 
+  // GET /api/admin/orders
+  // Admin-only list of all orders in the system.
   @Get()
   @ApiOperation({ summary: 'List all orders (admin)' })
   @ApiResponse({ status: 200, description: 'Order list' })
   listAll() {
+    // Delegate to the service.
     return this.ordersService.listAll();
   }
 }

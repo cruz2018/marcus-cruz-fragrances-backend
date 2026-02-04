@@ -12,8 +12,11 @@ import { Public } from '../common/decorators/public.decorator';
 @ApiTags('notes')
 @Controller('notes')
 export class NotesController {
+  // Inject service that contains notes business logic.
   constructor(private readonly notesService: NotesService) {}
 
+  // GET /api/notes
+  // Public list of notes for filtering and composition.
   @Get()
   @Public()
   @ApiOperation({ summary: 'List public notes' })
@@ -22,6 +25,8 @@ export class NotesController {
     return this.notesService.listPublic();
   }
 
+  // GET /api/notes/admin
+  // Admin list of notes (includes all records).
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -32,6 +37,8 @@ export class NotesController {
     return this.notesService.listAdmin();
   }
 
+  // POST /api/notes/admin
+  // Admin creates a note.
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -42,6 +49,8 @@ export class NotesController {
     return this.notesService.create(dto);
   }
 
+  // PUT /api/notes/admin/:id
+  // Admin updates a note by id.
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -52,6 +61,8 @@ export class NotesController {
     return this.notesService.update(id, dto);
   }
 
+  // DELETE /api/notes/admin/:id
+  // Admin deletes a note by id.
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)

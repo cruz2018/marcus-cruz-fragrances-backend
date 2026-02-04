@@ -12,8 +12,11 @@ import { Public } from '../common/decorators/public.decorator';
 @ApiTags('collections')
 @Controller('collections')
 export class CollectionsController {
+  // Inject the service that contains collections business logic.
   constructor(private readonly collectionsService: CollectionsService) {}
 
+  // GET /api/collections
+  // Public list of active collections.
   @Get()
   @Public()
   @ApiOperation({ summary: 'List public collections' })
@@ -22,6 +25,8 @@ export class CollectionsController {
     return this.collectionsService.listPublic();
   }
 
+  // GET /api/collections/admin
+  // Admin list of all collections.
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -32,6 +37,8 @@ export class CollectionsController {
     return this.collectionsService.listAdmin();
   }
 
+  // POST /api/collections/admin
+  // Admin creates a collection.
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -42,6 +49,8 @@ export class CollectionsController {
     return this.collectionsService.create(dto);
   }
 
+  // PUT /api/collections/admin/:id
+  // Admin updates a collection by id.
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -52,6 +61,8 @@ export class CollectionsController {
     return this.collectionsService.update(id, dto);
   }
 
+  // DELETE /api/collections/admin/:id
+  // Admin deletes a collection by id.
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)

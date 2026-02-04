@@ -21,8 +21,12 @@ import { OrdersModule } from './orders/orders.module';
     // THROTTLE_TTL = time window in seconds
     // THROTTLE_LIMIT = max requests per window per IP
     ThrottlerModule.forRoot({
-      ttl: Number(process.env.THROTTLE_TTL ?? 60),
-      limit: Number(process.env.THROTTLE_LIMIT ?? 100),
+      throttlers: [
+        {
+          ttl: Number(process.env.THROTTLE_TTL ?? 60),
+          limit: Number(process.env.THROTTLE_LIMIT ?? 100),
+        },
+      ],
     }),
 
     // Shared Prisma client for all modules
